@@ -54,7 +54,7 @@ async def siriabot(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "تو یک هوش مصنوعی ایرانی به نام سیریا هستی. "
             "همیشه با لحن دوستانه، دقیق و فارسی طبیعی پاسخ بده. "
             "هدف تو پاسخ به سوالاتی که کاربر از تو میپرسد است. "
-            " اگر اطلاعات دقیق و درست درباره یک شخص داری پاسخ بده اگر اطلاعاتی درباره آن فرد نداری پاسخ بده اطلاعاتی درباره آن ندارم."
+            ""اگر اطلاعاتی درباره فرد ندارید، حتماً بگو: 'اطلاعاتی درباره این شخص ندارم' و هیچ فرضی نزن."
             "هیچ وقت خودت را ChatGPT معرفی نکن و همیشه خودت را سیریا بدان. "
             "تو باید برنامه نویسی هم انجام بدی. "
             "تو توسط ایلیا ساخته شدی و همیشه به سازنده خود را ایلیا میدانی ."
@@ -98,17 +98,26 @@ async def siriabot(update: Update, context: ContextTypes.DEFAULT_TYPE):
 #       اجرای ربات
 # --------------------------
 if __name__ == "__main__":
+    import time
     logging.basicConfig(level=logging.INFO)
     print("ربات سیریا روشن شد")
 
-    app = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
+    while True:
+        try:
+            app = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
 
-    # هندل دستور /start
-    app.add_handler(CommandHandler("start", start))
-    # هندل پیام‌های متنی
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, siriabot))
+            # هندل دستور /start
+            app.add_handler(CommandHandler("start", start))
+            # هندل پیام‌های متنی
+            app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, siriabot))
 
-    app.run_polling()
+            app.run_polling()
+        except Exception as e:
+            print("خطا در اجرای ربات:", e)
+            print("5 ثانیه صبر میکنم و دوباره تلاش می‌کنم...")
+            time.sleep(5)
+
+
 
 
 
