@@ -1,6 +1,5 @@
 import json
 import os
-from flask import Flask
 from openai import OpenAI
 from telegram import Update
 from telegram.constants import ChatAction
@@ -31,8 +30,8 @@ else:
 # --------------------------
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "سلام! من سیریا هستم، هوش مصنوعی ایرانی ساخته شده توسط ایلیا. 😊\n"
-        "می‌تونی هر سوالی رو که میخوای بهم بگی و من بهت پاسخ میدم."
+        "سلام! من سیریا هستم، دستیار هوشمند فروشگاه اسپرت کالا. 😊\n"
+        "می‌تونی هر محصولی رو که میخوای بهم بگی و من برات تحلیل می‌کنم."
     )
 
 # --------------------------
@@ -95,15 +94,6 @@ async def siriabot(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await update.message.reply_text(reply)
 
-app_flask = Flask("SiriaBotPing")
-
-@app_flask.route("/")
-def home():
-    return "Siria bot is alive!"
-
-def run_flask():
-    port = int(os.environ.get("PORT", 10000))
-    app_flask.run(host="0.0.0.0", port=port)
 # --------------------------
 #       اجرای ربات
 # --------------------------
@@ -119,11 +109,3 @@ if __name__ == "__main__":
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, siriabot))
 
     app.run_polling()
-
-
-
-
-
-
-
-
