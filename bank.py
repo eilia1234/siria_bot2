@@ -1,5 +1,6 @@
 import json
 import os
+from flask import Flask
 from openai import OpenAI
 from telegram import Update
 from telegram.constants import ChatAction
@@ -94,6 +95,15 @@ async def siriabot(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await update.message.reply_text(reply)
 
+app_flask = Flask("SiriaBotPing")
+
+@app_flask.route("/")
+def home():
+    return "Siria bot is alive!"
+
+def run_flask():
+    port = int(os.environ.get("PORT", 10000))
+    app_flask.run(host="0.0.0.0", port=port)
 # --------------------------
 #       اجرای ربات
 # --------------------------
@@ -116,6 +126,7 @@ if __name__ == "__main__":
             print("خطا در اجرای ربات:", e)
             print("5 ثانیه صبر میکنم و دوباره تلاش می‌کنم...")
             time.sleep(5)
+
 
 
 
